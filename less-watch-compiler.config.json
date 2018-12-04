@@ -1,0 +1,8 @@
+{
+  "minified": false,
+  "sourcemap": false,
+  "watchFolder": "src/less",
+  "outputFolder": "src/css",
+  "mainFile": "Contracting.less",
+  "enableJs": true
+}

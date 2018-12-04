@@ -1,0 +1,43 @@
+{
+  "name": "connect-contracting",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8102",
+  "dependencies": {
+    "cross-env": "^5.1.5",
+    "wait-on": "^3.1.0",
+    "npm-run-all": "^4.1.3",
+    "concurrently": "^4.0.1",
+    "csv-parse": "^2.5.0",
+    "cypress": "^3.1.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.9.1",
+    "express": "^4.16.3",
+    "less": "^3.8.1",
+    "less-watch-compiler": "^1.11.3",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4",
+    "serve": ">=7.0.0"
+  },
+  "scripts": {
+    "generate:codes": "node tools/generate_code_files.js",
+    "start": "concurrently npm:start:*",
+    "start:react": "react-scripts start",
+    "start:api": "node server/api",
+    "start:less-watch": "less-watch-compiler --config less-watch-compiler.config.json",
+    "build": "run-s build:less build:react build:wedge build:package",
+    "build:less": "npm run start:less-watch -- --run-once",
+    "build:react": "cross-env CI=true react-scripts build",
+    "build:wedge": "node build_connect_wedge.js",
+    "build:package": "node build_package.js",
+    "test": "concurrently npm:test:*",
+    "test:lint": "eslint src",
+    "test:jest": "cross-env CI=true react-scripts test --env=jsdom",
+    "test:end2end": "npm run wait:api && cypress run --project end2end --reporter junit",
+    "cy:end2end": "cypress open --project end2end",
+    "wait:api": "wait-on http-get://localhost:8102 -t 10000"
+  }
+}
